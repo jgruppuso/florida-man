@@ -19,7 +19,7 @@ def check_if_it_is_me(ctx):
 @bot.event
 async def on_ready():
   game = discord.Game("call me with !florida")
-  await bot.change_presence(status=discord.Status.idle, activity=game)
+  await bot.change_presence(status=discord.Status.online, activity=game)
 
   print(f'{bot.user} has connected to Discord!')
 
@@ -62,8 +62,10 @@ async def bye(ctx):
 
 @bot.event
 async def on_command_error(ctx, error):
+    if isinstance(error, commands.errors.CommandNotFound):
+      pass
     if isinstance(error, commands.errors.CheckFailure):
-        await ctx.send('You do not have the correct role for this command.')
+      await ctx.send('You do not have the correct role for this command.')
     else:
       print(ctx, error)
 
